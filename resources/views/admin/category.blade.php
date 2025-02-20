@@ -79,6 +79,7 @@
                             @foreach ($data as $data)
                             <tr>
                                 <td>{{ $data->cat_title }}</td>
+                                <center>
                                 <td class="action-buttons">
                                     <a href="{{ url('edit_category', $data->id) }}" class="btn btn-warning">
                                         <i class="bi bi-pencil-square"></i> Update
@@ -86,6 +87,7 @@
                                     <button class="btn btn-danger delete-btn" data-url="{{ url('cat_delete', $data->id) }}">
                                         <i class="bi bi-trash"></i> Hapus
                                     </button>
+                                </center>
                                 </td>
                             </tr>
                             @endforeach

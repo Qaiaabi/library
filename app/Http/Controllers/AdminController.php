@@ -32,7 +32,6 @@ class AdminController extends Controller
     }
     public function category_page(Request $request)
     {
-
         $data = Category::all();
         return view('admin.category', compact('data'));
     }
@@ -100,8 +99,9 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Buku berhasil ditambahkan!');
     }
     
-    public function view_books(){
-        $data = Category::all();
-        return view('admin.view_books', compact('data'));
-    }
+    public function view_books()
+{
+    $books = books::with('category')->get(); // Load relasi category
+    return view('admin.view_books', compact('books'));
+}
 }

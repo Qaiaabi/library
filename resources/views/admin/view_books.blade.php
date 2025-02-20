@@ -3,6 +3,8 @@
 
 <head>
     @include('admin.css')
+
+
     <style>
         /* Styling untuk tabel */
         table {
@@ -37,7 +39,6 @@
         }
     </style>
 
-    <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
@@ -58,6 +59,52 @@
                 @endif
             </div>
 
+            <table>
+                <thead>
+                    <tr>
+                        <th>Gambar</th>
+                        <th>Judul</th>
+                        <th>Penulis</th>
+                        <th>Penerbit</th>
+                        <th>Tahun Terbit</th>
+                        <th>Deskripsi</th>
+                        <th>Stock</th>
+                        <th>Kategori</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($books as $book)
+                    <tr>
+                        <td>
+                            @if($book->gambar)
+                            <img src="{{ asset('storage/' . $book->gambar) }}" width="150">
+                            @else
+                            <span>Tidak ada gambar</span>
+                            @endif
+                        </td>
+                        <td>{{ $book->judul }}</td>
+                        <td>{{ $book->category->cat_title ?? 'Kategori Tidak Ada' }}</td>
+                        <td>{{ $book->penulis }}</td>
+                        <td>{{ $book->penerbit }}</td>
+                        <td>{{ $book->tahun_terbit }}</td>
+                        <td>{{ $book->deskripsi }}</td>
+                        <td>{{ $book->stock }}</td>
+
+
+                        <td class="action-buttons">
+                            <a href="{{ url('edit_category', $book->id) }}" class="btn btn-warning">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </a>
+                            <a href="{{ url('cat_delete', $book->id) }}" class="btn btn-danger delete-btn">
+                                <i class="bi bi-trash"></i> Hapus
+                            </a>
+                        </td>
+                    </tr>
+                    @endforeach
+
+                </tbody>
+            </table>
 
         </div>
 
