@@ -33,6 +33,12 @@ route::post('/add_category', [AdminController::class, 'add_category']);
 route::get('/cat_delete/{id}', [AdminController::class, 'cat_delete']);
 route::get('/edit_category/{id}', [AdminController::class, 'edit_category']);
 route::post('/update_category/{id}', [AdminController::class, 'update_category']);
+
+
 Route::get('/add_book', [AdminController::class, 'add_book']);
 Route::post('/book_stock', [AdminController::class, 'book_stock']);
 Route::get('/view_books', [AdminController::class, 'view_books']);
+
+Route::get('/view_books', [AdminController::class, 'view_books'])->name('view_books');
+
+route::get('/books_delete/{id}', [AdminController::class, 'books_delete']);

@@ -28,6 +28,7 @@
         th {
             background-color: #343a40;
             color: white;
+            text-align: center;
         }
 
         tr:nth-child(even) {
@@ -52,11 +53,12 @@
         <div class="container mt-4">
 
             <div>
-                @if(session()->has('message'))
+                @if(session('success'))
                 <div class="alert alert-success">
-                    {{ session()->get('message') }}
+                    {{ session('success') }}
                 </div>
                 @endif
+
             </div>
 
             <table>
@@ -64,12 +66,12 @@
                     <tr>
                         <th>Gambar</th>
                         <th>Judul</th>
+                        <th>Kategori</th>
                         <th>Penulis</th>
                         <th>Penerbit</th>
                         <th>Tahun Terbit</th>
                         <th>Deskripsi</th>
                         <th>Stock</th>
-                        <th>Kategori</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -92,13 +94,13 @@
                         <td>{{ $book->stock }}</td>
 
 
-                        <td class="action-buttons">
-                            <a href="{{ url('edit_category', $book->id) }}" class="btn btn-warning">
+                        <td style="width: 60px;" class="action-buttons">
+                            <a style="margin: 5px;" href="{{ url('edit_category', $book->id) }}" class="btn btn-warning">
                                 <i class="bi bi-pencil-square"></i> Edit
                             </a>
-                            <a href="{{ url('cat_delete', $book->id) }}" class="btn btn-danger delete-btn">
+                            <button style="margin: 5px;" class="btn btn-danger delete-btn" data-url="{{ url('books_delete', $book->id) }}">
                                 <i class="bi bi-trash"></i> Hapus
-                            </a>
+                            </button>
                         </td>
                     </tr>
                     @endforeach

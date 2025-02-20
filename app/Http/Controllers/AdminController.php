@@ -63,11 +63,13 @@ class AdminController extends Controller
         $data->save();
         return redirect('/category_page')->with('message', 'Category Updated Successfully');
     }
-    public function add_book(){
+    public function add_book()
+    {
         $data = Category::all();
         return view('admin.add_book', compact('data'));
     }
-    public function book_stock(Request $request) {
+    public function book_stock(Request $request)
+    {
         $request->validate([
             'judul' => 'required|string',
             'penulis' => 'required|string',
@@ -78,13 +80,13 @@ class AdminController extends Controller
             'stock' => 'required|integer',
             'gambar' => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ]);
-        
+
         $gambar = $request->file('gambar');
         $book_image_name = time() . '.' . $gambar->getClientOriginalExtension();
         $gambar->storeAs('public/book', $book_image_name);
-    
+
         $gambarPath = $request->file('gambar')->store('buku', 'public');
-    
+
         $book = new Books();
         $book->judul = $request->judul;
         $book->penulis = $request->penulis;
@@ -95,13 +97,24 @@ class AdminController extends Controller
         $book->stock = $request->stock;
         $book->gambar = $gambarPath;
         $book->save();
-    
-        return redirect()->back()->with('success', 'Buku berhasil ditambahkan!');
+
+        return redirect()->route('view_books')->with('success', 'Buku berhasil ditambahkan!');
     }
-    
+
     public function view_books()
-{
-    $books = books::with('category')->get(); // Load relasi category
-    return view('admin.view_books', compact('books'));
-}
+    {
+        $books = books::with('category')->get(); // Load relasi category
+        return view('admin.view_books', compact('books'));
+    }
+    public function books_delete($id)
+    {
+        $data = Books::find($id); // Ganti category dengan Books
+
+        if ($data) {
+            $data->delete();
+            return redirect()->back()->with('message', 'Buku berhasil dihapus!');
+        }
+
+        return redirect()->back()->with('error', 'Buku tidak ditemukan!');
+    }
 }
